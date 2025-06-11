@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast App</title>
+    <meta name="description" content="Real-time weather forecasts for any city">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" type="module" defer></script>
+    <script src="script.js" defer></script>
     <!-- Import google icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Import font -->
@@ -15,6 +16,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#1a237e">
 </head>
 
 <body>
@@ -57,7 +64,7 @@
                     <span class="material-icons">air</span>
                     <div class="condition-info">
                         <h4 class="condition-txt regular-txt">Wind Speed</h4>
-                        <h3 class="wind-value-txt">2 M/s</h3>
+                        <h3 class="wind-value-txt">2 m/s</h3>
                     </div>
                 </div>
             </div>
@@ -66,6 +73,7 @@
                 <!-- Forecast items will be dynamically inserted here -->
             </div>
         </section>
+        
 
         <section class="search-city section-message" aria-live="polite">
             <img src="assets/message/search-city.png" alt="Search city illustration" loading="lazy">
@@ -81,13 +89,154 @@
             <div>
                 <h1>City Not Found</h1>
                 <h4 class="regular-txt">Please try another city name</h4>
+                <button class="retry-btn">
+                    <span class="material-icons">refresh</span>
+                    Try Again
+                </button>
             </div>
         </section>
 
         <div class="loading-spinner" style="display: none;">
             <div class="spinner"></div>
+            <p class="loading-text">Loading weather data...</p>
         </div>
+
+        <div class="sun-container">
+            <div class="sun"></div>  </div>
     </main>
+
+    <style>
+        /* Animation styles */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes weatherIconRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(5deg);
+            }
+
+            50% {
+                transform: rotate(0deg);
+            }
+
+            75% {
+                transform: rotate(-5deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .float {
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .weather-icon-animate {
+            animation: weatherIconRotate 5s infinite ease-in-out;
+        }
+
+        .retry-btn {
+            background: var(--secondary-bg);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .retry-btn:hover {
+            background: var(--hover-bg);
+            transform: translateY(-2px);
+        }
+
+        .loading-text {
+            margin-top: 15px;
+            color: white;
+            text-align: center;
+            animation: fadeIn 1s infinite alternate;
+        }
+
+        /* Input focus animation */
+        .city-input:focus {
+            animation: pulse 2s infinite;
+        }
+
+        /* Forecast item animation */
+        .forecast-item {
+            animation: fadeIn 0.5s ease-out forwards;
+            animation-delay: calc(var(--order) * 0.1s);
+        }
+    </style>
 </body>
 
 </html>
